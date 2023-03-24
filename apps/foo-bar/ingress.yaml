@@ -5,6 +5,9 @@ metadata:
   name: foo-bar-ingress
   labels:
     app: foo-bar
+    annotations:
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/strip-path: "true"
 spec:
   ingressClassName: kong
   rules:
@@ -24,7 +27,7 @@ spec:
             name: bar-service
             port:
               number: 80
-      - path: /cep/{cep}
+      - path: /cep
         pathType: Prefix
         backend:
           service:
