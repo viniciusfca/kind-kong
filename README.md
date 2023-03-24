@@ -134,7 +134,7 @@ kubectl -n argocd patch deployment argo-cd-argocd-server --type json \
 ## Deploy native plugins
 
 ```
-kubectl apply -n httpbin -f kong-plugins/rate-limiting.yaml
+kubectl apply -n cepapi -f kong-plugins/rate-limiting.yaml
 kubectl apply -f kong-plugins/prometheus.yaml
 ```
 
