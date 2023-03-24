@@ -9,6 +9,7 @@ metadata:
     kubernetes.io/ingress.class: "kong"
     konghq.com/strip-path: "true"
     konghq.com/preserve-host: "true"
+    konghq.com/methods: GET
 
 spec:
   ingressClassName: kong
