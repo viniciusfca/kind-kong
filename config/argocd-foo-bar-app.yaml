@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: foo-bar
+  name: cepapi
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/viniciusfca/kind-kong.git
     targetRevision: HEAD
-    path: apps/foo-bar
+    path: apps/cepapi
   destination:
     server: https://kubernetes.default.svc
-    namespace: foo-bar
+    namespace: cepapi
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

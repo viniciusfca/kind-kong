@@ -39,7 +39,7 @@ git push origin main
 ## Create Kind cluster
 
 ```bash
-kind create cluster --name kong --config=resources/kind.yaml
+kind create cluster --name kong --config=resources/kind.yaml --image=kindest/node:v1.23.12
 kind get kubeconfig --name kong > ~/.kube/kind-kong-config
 ```
 
