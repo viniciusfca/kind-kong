@@ -24,3 +24,10 @@ spec:
             name: bar-service
             port:
               number: 80
+      - path: /cep
+        pathType: Prefix
+        backend:
+          service:
+            name: cepapi-service
+            port:
+              number: 5000
