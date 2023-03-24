@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: echo
-        image: viniciusfca/cepapi:lastest
+        image: viniciusfca/cepapi:v1.0.0
         ports:
         - containerPort: 5000
           protocol: TCP
