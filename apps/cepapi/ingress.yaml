@@ -6,7 +6,7 @@ metadata:
   labels:
     app: cepapi
   annotations:
-    #konghq.com/plugins: rate-limiting, custom-plugin
+    konghq.com/plugins: rate-limiting, custom-plugin
     konghq.com/preserve-host: "true"
     konghq.com/methods: GET
 
