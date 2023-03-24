@@ -5,9 +5,9 @@ metadata:
   name: foo-bar-ingress
   labels:
     app: foo-bar
-    annotations:
-    kubernetes.io/ingress.class: "kong"
-    konghq.com/strip-path: "true"
+  annotations:
+  kubernetes.io/ingress.class: "kong"
+  konghq.com/strip-path: "true"
 spec:
   ingressClassName: kong
   rules:
