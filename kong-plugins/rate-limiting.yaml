@@ -3,7 +3,7 @@ kind: KongPlugin
 metadata:
   name: rate-limiting
 config:
-  minute: 5
+  minute: 20
   policy: local
   fault_tolerant: true
   hide_client_headers: false
