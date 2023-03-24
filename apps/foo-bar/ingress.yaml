@@ -24,7 +24,7 @@ spec:
             name: bar-service
             port:
               number: 80
-      - path: /cep
+      - path: /cep/{cep}
         pathType: Prefix
         backend:
           service:
