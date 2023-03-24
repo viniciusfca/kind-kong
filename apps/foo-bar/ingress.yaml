@@ -9,6 +9,7 @@ metadata:
     kubernetes.io/ingress.class: "kong"
     konghq.com/preserve-host: "true"
     konghq.com/methods: GET
+    konghq.com/plugins: rate-limiting    
 
 spec:
   ingressClassName: kong
