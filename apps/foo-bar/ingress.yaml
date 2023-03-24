@@ -8,6 +8,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "kong"
     konghq.com/strip-path: "true"
+    konghq.com/preserve-host: "true"
+
 spec:
   ingressClassName: kong
   rules:
