@@ -3,5 +3,5 @@ kind: KongPlugin
 metadata:
   name: custom-plugin
 config:
-  header_value: "my first custom plugin"
+  header_value: "x-authenticated"
 plugin: myheader

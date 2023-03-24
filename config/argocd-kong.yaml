@@ -18,10 +18,10 @@ spec:
         podAnnotations:
           prometheus.io/scrape: "true" # Ask Prometheus to scrape the
           prometheus.io/port: "8100"   # Kong pods for metrics
-        # plugins:
-        #   configMaps:                # change this to 'secrets' if you created a secret
-        #   - name: kong-plugin-myheader
-        #     pluginName: myheader
+        plugins:
+          configMaps:                # change this to 'secrets' if you created a secret
+          - name: kong-plugin-myheader
+            pluginName: myheader
   destination:
     server: https://kubernetes.default.svc
     namespace: kong
