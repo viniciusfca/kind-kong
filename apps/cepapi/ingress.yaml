@@ -8,20 +8,13 @@ metadata:
   annotations:
     konghq.com/plugins: rate-limiting, custom-plugin
     konghq.com/preserve-host: "true"
-    konghq.com/methods: GET,POST
+    konghq.com/methods: POST
 
 spec:
   ingressClassName: kong
   rules:
   - http:
       paths:
-      - path: /cep
-        pathType: Prefix
-        backend:
-          service:
-            name: cepapi-service
-            port:
-              number: 5000
       - path: /graphql
         pathType: Prefix
         backend:
