@@ -8,7 +8,7 @@ metadata:
   annotations:
     konghq.com/plugins: rate-limiting, custom-plugin
     konghq.com/preserve-host: "true"
-    konghq.com/methods: GET
+    konghq.com/methods: GET,POST
 
 spec:
   ingressClassName: kong
@@ -22,3 +22,10 @@ spec:
             name: cepapi-service
             port:
               number: 5000
+      - path: /graphql
+        pathType: Prefix
+        backend:
+          service:
+            name: cepapi-service
+            port:
+              number: 5000              
