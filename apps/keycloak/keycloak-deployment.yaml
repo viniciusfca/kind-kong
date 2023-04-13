@@ -22,9 +22,8 @@ spec:
         app: keycloak
     spec:
       tolerations:
-        - key: NodeType
-          operator: Equal
-          value: app
+        - key: node-role.kubernetes.io/master
+          operator: Exists
           effect: NoSchedule
       nodeSelector:
         type: app
