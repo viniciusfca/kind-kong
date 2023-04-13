@@ -1,0 +1,11 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: keycloak-plugin
+config:
+  client_id: CLIENT_ID
+  client_secret: CLIENT_SECRET
+  introspection_endpoint: INTROSPECTION_ENDPOINT
+  uri_param_names:
+    - access_token
+plugin: lua
