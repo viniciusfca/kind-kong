@@ -6,16 +6,16 @@ metadata:
   labels:
     app: cepapi
   annotations:
-    konghq.com/plugins: rate-limiting, custom-plugin
+    konghq.com/plugins: rate-limiting
     konghq.com/preserve-host: "true"
-    konghq.com/methods: POST
+    konghq.com/methods: GET
 
 spec:
   ingressClassName: kong
   rules:
   - http:
       paths:
-      - path: /graphql
+      - path: /cep
         pathType: Prefix
         backend:
           service:
