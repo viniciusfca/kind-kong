@@ -82,7 +82,7 @@ function KeycloakHandler:access(conf)
     return responses.send_HTTP_UNAUTHORIZED(token_info_or_err)
   end
   
--- Adiciona o token ao cabeçalho de autorização antes de encaminhar a solicitação para o backend target.
+
 ngx.req.set_header("Authorization", "Bearer " .. token)
 
 end
