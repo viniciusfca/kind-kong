@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://charts.konghq.com
-    targetRevision: "2.8.0"
+    targetRevision: "3.2.2"
     chart: kong
     helm:
       parameters:
@@ -19,9 +19,9 @@ spec:
           prometheus.io/scrape: "true" # Ask Prometheus to scrape the
           prometheus.io/port: "8100"   # Kong pods for metrics
         plugins:
-          configMaps:                # change this to 'secrets' if you created a secret
-          - name: kong-plugin-myheader
-            pluginName: myheader
+          configMaps:
+          - name: keycloak-plugin
+            pluginName: keycloak-plugin
   destination:
     server: https://kubernetes.default.svc
     namespace: kong

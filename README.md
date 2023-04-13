@@ -175,7 +175,7 @@ Then reload Kong deployment inside ArgoCD.
 Apply the CRD to kubernetes API.
 
 ```bash
-kubectl apply -n httpbin -f kong-plugins/custom.yaml
+kubectl apply -n cepapi -f kong-plugins/custom.yaml
 ```
 
 ## Cleanup Kind
