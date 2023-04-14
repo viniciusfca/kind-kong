@@ -1,7 +1,7 @@
 local BasePlugin = require "kong.plugins.base_plugin"
-local constants = require "kong.constants"
-local jwt_decoder = require "kong.plugins.jwt.jwt_parser"
-local socket = require "socket"
+local json = require "cjson.safe"
+local jwt_parser = require "kong.plugins.jwt.jwt_parser"
+local http = require "resty.http"
 
 local KeycloakHandler = BasePlugin:extend()
 
@@ -36,11 +36,13 @@ local function retrieve_token(request, conf)
       return m[1]
     end
   end
+
+  return nil, "Token not found"
 end
 
 local function introspect_token(conf, token)
-  local http = require "resty.http"
   local httpc = http.new()
+  httpc:set_timeouts(5000, 5000, 5000) -- timeout de 5 segundos para cada fase (connect, send, read)
   local res, err = httpc:request_uri(conf.introspection_endpoint, {
     method = "POST",
     ssl_verify = false,
@@ -59,8 +61,10 @@ local function introspect_token(conf, token)
     return false, res.body
   end
 
-  local json = require("cjson")
-  local token_info = json.decode(res.body)
+  local token_info, decode_err = json.decode(res.body)
+  if decode_err then
+    return false, decode_err
+  end
 
   if not token_info.active then
     return false, "Token is not active"
@@ -70,23 +74,19 @@ local function introspect_token(conf, token)
 end
 
 function KeycloakHandler:access(conf)
-  KeycloakHandler.super.access(self)
-
-  ngx.log(ngx.DEBUG, "KeycloakHandler:access() called")
   local token, err = retrieve_token(ngx.req, conf)
   if err then
-    return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
+    return kong.response.exit(401, { message = err })
   end
 
   local ok, token_info_or_err = introspect_token(conf, token)
-  ngx.log(ngx.DEBUG, "introspect_token() result: ", json.encode(token_info_or_err))
   if not ok then
-    return responses.send_HTTP_UNAUTHORIZED(token_info_or_err)
+    return kong.response.exit(401, { message = token_info_or_err })
   end
-  
 
-ngx.req.set_header("Authorization", "Bearer " .. token)
+  ngx.log(ngx.DEBUG, "Token info: ", json.encode(token_info_or_err))
 
+  ngx.req.set_header("Authorization", "Bearer " .. token)
 end
 
 return KeycloakHandler
