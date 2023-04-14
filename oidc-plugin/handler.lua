@@ -72,12 +72,14 @@ end
 function KeycloakHandler:access(conf)
   KeycloakHandler.super.access(self)
 
+  ngx.log(ngx.DEBUG, "KeycloakHandler:access() called")
   local token, err = retrieve_token(ngx.req, conf)
   if err then
     return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
   end
 
   local ok, token_info_or_err = introspect_token(conf, token)
+  ngx.log(ngx.DEBUG, "introspect_token() result: ", json.encode(token_info_or_err))
   if not ok then
     return responses.send_HTTP_UNAUTHORIZED(token_info_or_err)
   end
