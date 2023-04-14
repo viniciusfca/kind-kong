@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  keycloak:
+    image: jboss/keycloak:15.0.2
+    ports:
+      - "8082:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2

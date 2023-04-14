@@ -6,9 +6,13 @@ metadata:
   labels:
     app: cepapi
   annotations:
-    konghq.com/plugins: rate-limiting
+    konghq.com/plugins: rate-limiting, keycloak-plugin
     konghq.com/preserve-host: "true"
     konghq.com/methods: GET
+    konghq.com/keycloak-plugin.client_id: <your_client_id>
+    konghq.com/keycloak-plugin.client_secret: <your_client_secret>
+    konghq.com/keycloak-plugin.introspection_endpoint: <your_introspection_endpoint>
+    konghq.com/keycloak-plugin.uri_param_names: access_token
 
 spec:
   ingressClassName: kong
