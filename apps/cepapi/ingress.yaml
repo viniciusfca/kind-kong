@@ -6,7 +6,7 @@ metadata:
   labels:
     app: cepapi
   annotations:
-    konghq.com/plugins: rate-limiting
+    konghq.com/plugins: keycloak-plugin,rate-limiting
     konghq.com/preserve-host: "true"
     konghq.com/methods: GET
 
