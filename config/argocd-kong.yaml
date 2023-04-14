@@ -20,7 +20,7 @@ spec:
           prometheus.io/port: "8100"   # Kong pods for metrics
         plugins:
           configMaps:
-          - name: keycloak-plugin
+          - name: kong-plugin-keycloak-plugin
             pluginName: keycloak-plugin
   destination:
     server: https://kubernetes.default.svc
