@@ -14,35 +14,35 @@ spec:
       - name: "ingressController.installCRDs"
         value: "false"
         forceString: true # ensures that value is treated as a string
-      # values: |
-      #   podAnnotations:
-      #     prometheus.io/scrape: "true"
-      #     prometheus.io/port: "8100"
-      #   plugins:
-      #     configMaps:
-      #       - name: kong-plugin-keycloak-plugin
-      #         pluginName: keycloak-plugin
-      #   extraVolumes:
-      #     - name: kong-plugins
-      #       configMap:
-      #         name: kong-plugin-keycloak-plugin
-      #   extraVolumeMounts:
-      #     - name: kong-plugins
-      #       mountPath: /usr/local/share/lua/5.1/kong/plugins/keycloak-plugin
-      #   env:
-      #     KONG_LUA_PACKAGE_PATH: "/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/share/lua/5.1/kong/plugins/keycloak-plugin/?.lua;;"
-      #   extraInitContainers:
-      #     - name: install-plugins
-      #       image: kong:2.8.0-alpine
-      #       command: ["/bin/sh", "-c"]
-      #       args:
-      #         - |
-      #           luarocks install cjson-safe
-      #           luarocks install lua-resty-http
-      #           luarocks install lua-resty-jwt
-      #       volumeMounts:
-      #         - name: kong-plugins
-      #           mountPath: /usr/local/share/lua/5.1/kong/plugins/keycloak-plugin
+      values: |
+        podAnnotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "8100"
+        plugins:
+          configMaps:
+            - name: kong-plugin-keycloak-plugin
+              pluginName: keycloak-plugin
+        extraVolumes:
+          - name: kong-plugins
+            configMap:
+              name: kong-plugin-keycloak-plugin
+        extraVolumeMounts:
+          - name: kong-plugins
+            mountPath: /usr/local/share/lua/5.1/kong/plugins/keycloak-plugin
+        env:
+          KONG_LUA_PACKAGE_PATH: "/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/share/lua/5.1/kong/plugins/keycloak-plugin/?.lua;;"
+        extraInitContainers:
+          - name: install-plugins
+            image: kong:2.8.0-alpine
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                luarocks install cjson-safe
+                luarocks install lua-resty-http
+                luarocks install lua-resty-jwt
+            volumeMounts:
+              - name: kong-plugins
+                mountPath: /usr/local/share/lua/5.1/kong/plugins/keycloak-plugin
         
   destination:
     server: https://kubernetes.default.svc
