@@ -6,13 +6,9 @@ metadata:
   labels:
     app: cepapi
   annotations:
-    konghq.com/plugins: rate-limiting, kong-plugin-keycloak-plugin
+    konghq.com/plugins: rate-limiting, keycloak-plugin
     konghq.com/preserve-host: "true"
     konghq.com/methods: GET
-    konghq.com/keycloak-plugin.client_id: kong-oidc
-    konghq.com/keycloak-plugin.client_secret: 531b0ec0-bff2-49b7-a91a-20a83be4f7d6
-    konghq.com/keycloak-plugin.introspection_endpoint: https://38ed-179-126-139-128.ngrok-free.app/auth/realms/master/protocol/openid-connect/token/introspec
-    konghq.com/keycloak-plugin.uri_param_names: access_token
 
 spec:
   ingressClassName: kong

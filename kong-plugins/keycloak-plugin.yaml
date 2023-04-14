@@ -3,9 +3,9 @@ kind: KongPlugin
 metadata:
   name: keycloak-plugin
 config:
-  client_id: CLIENT_ID
-  client_secret: CLIENT_SECRET
-  introspection_endpoint: INTROSPECTION_ENDPOINT
+  client_id: kong-oidc
+  client_secret: 531b0ec0-bff2-49b7-a91a-20a83be4f7d6
+  introspection_endpoint: https://38ed-179-126-139-128.ngrok-free.app/auth/realms/master/protocol/openid-connect/token/introspec
   uri_param_names:
     - access_token
-plugin: lua
+plugin: keycloak-plugin
