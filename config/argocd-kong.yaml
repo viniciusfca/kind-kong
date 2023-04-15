@@ -37,9 +37,10 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - |
-                luarocks install cjson-safe
+                luarocks install lua-cjson
                 luarocks install lua-resty-http
                 luarocks install lua-resty-jwt
+                luarocks install luasocket
             volumeMounts:
               - name: kong-plugins
                 mountPath: /usr/local/share/lua/5.1/kong/plugins/keycloak-plugin
