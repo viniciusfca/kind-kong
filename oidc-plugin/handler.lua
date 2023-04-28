@@ -1,7 +1,8 @@
 local BasePlugin = require "kong.plugins.base_plugin"
-local json = require "cjson.safe"
+local json = require("cjson")
 local jwt_parser = require "kong.plugins.jwt.jwt_parser"
-local http = require "resty.http"
+local http = require("socket.http")
+local ltn12 = require("ltn12")
 
 local KeycloakHandler = BasePlugin:extend()
 
@@ -41,36 +42,44 @@ local function retrieve_token(request, conf)
 end
 
 local function introspect_token(conf, token)
-  local httpc = http.new()
-  httpc:set_timeouts(5000, 5000, 5000) -- timeout de 5 segundos para cada fase (connect, send, read)
-  local res, err = httpc:request_uri(conf.introspection_endpoint, {
-    method = "POST",
-    ssl_verify = false,
-    headers = {
-      ["Content-Type"] = "application/x-www-form-urlencoded",
-      ["Authorization"] = "Basic " .. ngx.encode_base64(conf.client_id .. ":" .. conf.client_secret),
-    },
-    body = "token=" .. token .. "&token_type_hint=access_token",
-  })
+
+  local url = conf.introspection_endpoint
+  local payload = 'client_id=' .. conf.client_id .. '&client_secret=' .. conf.client_secret .. '&token=' .. token
+
+  local response = {}
+  local res, code, headers = http.request{
+      url = url,
+      method = "POST",
+      headers = {
+          ["Content-Type"] = "application/x-www-form-urlencoded",
+          ["Content-Length"] = payload:len()
+      },
+      source = ltn12.source.string(payload),
+      sink = ltn12.sink.table(response)
+  }
 
   if not res then
-    return false, err
+    return false, "Failed to make request: " .. err
   end
 
-  if res.status ~= 200 then
-    return false, res.body
+  local response_body = table.concat(response)
+
+  if code ~= 200 then
+    return false, "Received non-200 response code: " .. response_body
   end
 
-  local token_info, decode_err = json.decode(res.body)
-  if decode_err then
-    return false, decode_err
+  local ok, token_info = pcall(json.decode, response_body)
+
+  if not ok then
+    return false, "Failed to decode JSON response: " .. token_info
   end
 
   if not token_info.active then
-    return false, "Token is not active"
+    print("Token is not active: " .. payload .. " response: " .. response_body)
+    return false, "Token is not active: " .. payload .. " response: " .. response_body
   end
-
-  return true, token_info
+    print('Sucesso ' .. response_body)
+    return true, token_info
 end
 
 function KeycloakHandler:access(conf)
@@ -86,6 +95,9 @@ function KeycloakHandler:access(conf)
 
   ngx.log(ngx.DEBUG, "Token info: ", json.encode(token_info_or_err))
 
+  local user = {
+    
+  }
   ngx.req.set_header("Authorization", "Bearer " .. token)
 end
 

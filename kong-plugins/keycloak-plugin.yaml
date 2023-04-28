@@ -2,12 +2,12 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: keycloak-plugin
+  namespace: cepapi
 config:
-  client_id: kong-oidc
-  client_secret: 531b0ec0-bff2-49b7-a91a-20a83be4f7d6
-  introspection_endpoint: https://38ed-179-126-139-128.ngrok-free.app/auth/realms/master/protocol/openid-connect/token/introspec
+  client_id: solar-inove-machine
+  client_secret: hdFBGWdEB6nJk9wZX2aypxfbH2SEKyJd
+  introspection_endpoint: http://stg-sso.solfacil.com.br/realms/General/protocol/openid-connect/token/introspect
   uri_param_names:
     - access_token
-    - token
 plugin: keycloak-plugin
 run_on: first

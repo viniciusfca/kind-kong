@@ -1,16 +1,7 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: keycloak
-  labels:
-    app.kubernetes.io/name: keycloak
-    app.kubernetes.io/instance: keycloak
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: keycloak
-  namespace: keycloak
+  name: keycloak-deployment
 spec:
   replicas: 1
   selector:
@@ -21,63 +12,30 @@ spec:
       labels:
         app: keycloak
     spec:
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-          effect: NoSchedule
-      nodeSelector:
-        type: app
       containers:
-        - image: jboss/keycloak:16.1.0
-          imagePullPolicy: IfNotPresent
-          name: keycloak
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "0.2"
-            limits:
-              memory: "1Gi"
-              cpu: "1"
+        - name: keycloak
+          image: jboss/keycloak:15.0.2
           ports:
             - containerPort: 8080
           env:
-            - name: KEYCLOAK_FRONTEND_URL
-              value: https://keycloak.localhost/auth
-            - name: PROXY_ADDRESS_FORWARDING
-              value: "true"
             - name: KEYCLOAK_USER
-              value: "fake"
+              value: admin
             - name: KEYCLOAK_PASSWORD
-              value: "fakepassword"
+              value: admin
+            - name: DB_VENDOR
+              value: h2
+            - name: KEYCLOAK_LOGLEVEL
+              value: DEBUG
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: keycloak
-  namespace: keycloak
+  name: keycloak-service
 spec:
-  ports:
-    - port: 80
-      targetPort: 8080
-      protocol: TCP
-  type: ClusterIP
   selector:
     app: keycloak
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: keycloak
-  namespace: keycloak
-spec:
-  ingressClassName: kong
-  rules:
-  - http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: keycloak
-              port:
-                number: 80
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080

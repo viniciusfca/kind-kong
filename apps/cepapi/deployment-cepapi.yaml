@@ -24,3 +24,21 @@ spec:
         resources:
           requests:
             cpu: 200m
+
+
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongService
+metadata:
+  name: cepapi
+spec:
+  name: cepapi
+  url: http://cepapi-service:5000
+  route:
+    methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    paths:
+    - /cep
