@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cepapi-ingress
+  name: cepapi-lb
   namespace: argocd
 spec:
   project: default
@@ -11,7 +11,7 @@ spec:
     path: apps/cepapi-ingress
   destination:
     server: https://kubernetes.default.svc
-    namespace: cepapi-ingress
+    namespace: cepapi-lb
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
