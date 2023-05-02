@@ -2,18 +2,18 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: cepapi-ingress
+  name: cep
   labels:
-    app: cepapi-ingress
+    app: cep
 spec:
   selector:
     matchLabels:
-      app: cepapi-ingress
+      app: cep
   replicas: 1
   template:
     metadata:
       labels:
-        app: cepapi-ingress
+        app: cep
     spec:
       containers:
       - name: echo

@@ -7,7 +7,5 @@ config:
   client_id: solar-inove-machine
   client_secret: hdFBGWdEB6nJk9wZX2aypxfbH2SEKyJd
   introspection_endpoint: http://stg-sso.solfacil.com.br/realms/General/protocol/openid-connect/token/introspect
-  uri_param_names:
-    - access_token
 plugin: keycloak-plugin
 run_on: first
