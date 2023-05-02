@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cepapi-ingress
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/viniciusfca/kind-kong.git
+    targetRevision: HEAD
+    path: apps/cepapi-ingress
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cepapi-ingress
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
