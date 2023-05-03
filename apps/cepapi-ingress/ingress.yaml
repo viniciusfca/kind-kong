@@ -1,24 +1,24 @@
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: cep-ingress
-#   labels:
-#     app: cep
-#   annotations:
-#     konghq.com/plugins: keycloak-plugin
-#     konghq.com/preserve-host: "true"
-#     konghq.com/methods: GET,POST
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cep-ingress
+  labels:
+    app: cep
+  annotations:
+    konghq.com/plugins: keycloak-plugin
+    konghq.com/preserve-host: "true"
+    konghq.com/methods: GET,POST
 
-# spec:
-#   ingressClassName: kong
-#   rules:
-#   - http:
-#       paths:
-#       - path: /cepapi
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: cep-service
-#             port:
-#               number: 5000              
+spec:
+  ingressClassName: kong
+  rules:
+  - http:
+      paths:
+      - path: /cepapi
+        pathType: Prefix
+        backend:
+          service:
+            name: cep-service
+            port:
+              number: 5000              
