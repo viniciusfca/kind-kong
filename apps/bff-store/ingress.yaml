@@ -1,0 +1,24 @@
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: cepapi-ingress
+#   labels:
+#     app: cepapi
+#   annotations:
+#     konghq.com/plugins: keycloak-plugin
+#     konghq.com/preserve-host: "true"
+#     konghq.com/methods: GET,POST
+
+# spec:
+#   ingressClassName: kong
+#   rules:
+#   - http:
+#       paths:
+#       - path: /cep
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: cepapi-service
+#             port:
+#               number: 5000              
